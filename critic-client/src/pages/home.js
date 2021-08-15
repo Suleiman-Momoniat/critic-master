@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 import List from '../components/List';
+import { Profile } from '../components/Profile';
 
 class home extends Component {
     state = {
@@ -24,12 +25,12 @@ class home extends Component {
             this.state.lists.map(list => <List key={list.listId} list={list} />)
         ):(<p>Loading...</p>);
         return (
-            <Grid container spacing={10}>
-                <Grid item sm={9} xs={10}>
+            <Grid container spacing={16}>
+                <Grid item sm={8} xs={12}>
                     {recentListsMarkup}
                 </Grid>
-                <Grid item sm={1} xs={10}>
-                    <p>hello</p>
+                <Grid item sm={4} xs={12}>
+                    <Profile />
                 </Grid>
             </Grid> 
         );
