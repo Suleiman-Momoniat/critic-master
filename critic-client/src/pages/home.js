@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 import List from '../components/List';
-import { Profile } from '../components/Profile';
+import Profile from '../components/Profile';
 
 class home extends Component {
     state = {
