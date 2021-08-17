@@ -49,7 +49,7 @@ import {
         case UNLIKE_LIST:
         return {
           ...state,
-          likes: state.likes.filter(like => like.listId === action.payload.listId)
+          likes: state.likes.filter(like => like.listId !== action.payload.listId)
         }
       default:
         return state;

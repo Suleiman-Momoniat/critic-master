@@ -1,4 +1,4 @@
-import { SET_LISTS, LIKE_LIST, UNLIKE_LIST, LOADING_DATA } from "../types";
+import { SET_LISTS, LIKE_LIST, UNLIKE_LIST, LOADING_DATA, DELETE_LIST } from "../types";
 
 const initialState = {
     lists: [],
@@ -26,6 +26,12 @@ export default function(state= initialState, action){
             return {
                 ...state,
             };
+        case DELETE_LIST:
+            index = state.lists.findIndex(list => list.listId === action.payload);
+            state.lists.splice(index, 1);
+            return {
+                ...state
+            }
         default: 
         return state;
         }

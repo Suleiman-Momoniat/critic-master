@@ -1,8 +1,9 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import withStyles  from '@material-ui/core/styles/withStyles'
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyButton from '../util/MyButton';
+import DeleteList from './DeleteList';
 
 // MUI Stuff
 import Card from '@material-ui/core/Card';
@@ -35,12 +36,15 @@ import { red } from '@material-ui/core/colors';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { color } from '@material-ui/system';
 
 const styles = {
     card: {
-        display: 'flex',
-        marginBottom: 20,
-        overflow: 'scroll',
+      //position: 'relative',
+      display: 'flex',
+      marginBottom: 20,
+      overflow: 'scroll',
+      //width: '40'
     },
     image:{
         minWidth: 100,
@@ -50,9 +54,9 @@ const styles = {
         padding: 25,
         objectFit: 'cover'
     },
-    root: {
-      maxWidth: 345,
-    },
+    // root: {
+    //   maxWidth: 345,
+    // },
     listItems:{
       display:'inline-flex',
       overflow:'scroll',
@@ -158,16 +162,9 @@ const styles = {
         commentCount
       },
       user: {
-        authenticated
+        authenticated, credentials : { handle }
       }
   } = this.props;
-
-    // const {
-    //   user: {
-    //     authenticated
-    //   }
-    // } = this.props;
-    // console.log(movieList[0].imageUrl);
 
     const likeButton = !authenticated ? (
       <MyButton tip="Like">
@@ -185,7 +182,11 @@ const styles = {
           <FavoriteBorder color="primary"/>
         </MyButton>
       )
-    )
+    );
+
+    const deleteButton = authenticated && userHandle === handle ? (
+      <DeleteList listId={listId}/>
+    ) : null
 
     let listOfImages = [];
     const baseUrl = 'https://image.tmdb.org/t/p/w500/';
@@ -200,6 +201,7 @@ const styles = {
   
     return (
       <Card className={classes.root}>
+        {deleteButton}
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
@@ -220,20 +222,14 @@ const styles = {
                   </Typography>}
           subheader={dayjs(createdAt).fromNow()}
         />
+        
         <div className={classes.listItems}>
-        {/* <CardMedia
-          className={classes.media}
-          image={userImage}
-          title="Paella dish"
-        />
-        <CardMedia
-          className={classes.media}
-          image={userImage}
-          title="Paella dish"
-        /> */}
         {listOfImages}
         </div>
         <CardContent>
+        <Typography variant="body3" color="textPrimary" component="p">
+            Top Movies
+          </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             This impressive paella is a perfect party dish and a fun meal to cook together with your
             guests. Add 1 cup of frozen peas along with the mussels, if you like.
@@ -244,11 +240,16 @@ const styles = {
           </IconButton>
           <IconButton aria-label="share">
           </IconButton>
-          
+          {likeButton}
+          <span>{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
+          <MyButton tip="comments">
+            <ChatIcon color='primary'/>
+          </MyButton>
+          <span>{commentCount} Comments</span>
         </CardActions>
       </Card>
     );
-          }
+    }
   }
 
   List.propTypes = {

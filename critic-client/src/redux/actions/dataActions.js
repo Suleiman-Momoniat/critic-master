@@ -1,4 +1,4 @@
-import {SET_LISTS, LOADING_DATA, LIKE_LIST, UNLIKE_LIST, LOADING_USER} from '../types';
+import {SET_LISTS, LOADING_DATA, LIKE_LIST, UNLIKE_LIST, LOADING_USER, DELETE_LIST} from '../types';
 import axios from 'axios';
 
 // Get all lists
@@ -41,4 +41,13 @@ export const unlikeList = (listId) => (dispatch) => {
         })
     })
     .catch(err=>console.log(err));
+}
+
+// Delete List
+export const deleteList = (listId) => (dispatch) => {
+    axios.delete(`/list/${listId}`)
+    .then(()=>{
+        dispatch({type: DELETE_LIST, payload: listId})
+    })
+    .catch(err => console.log(err));
 }
