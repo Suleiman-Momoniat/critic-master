@@ -41,13 +41,16 @@ import { color } from '@material-ui/system';
 const styles = {
     card: {
       //position: 'relative',
-      display: 'flex',
+      // display: 'flex',
       marginBottom: 20,
       overflow: 'scroll',
       //width: '40'
     },
     image:{
-        minWidth: 100,
+        // minWidth: 100,
+        // minHeight: 100,
+        maxWidth: 100,
+        maxHeight: 100
 
     },
     content: {
@@ -64,8 +67,10 @@ const styles = {
     media: {
       // height: 0,
       paddingTop: '56.25%', // 16:9
-      minHeight: 100,
-      minWidth: 100
+      minHeight: 50,
+      minWidth: 100,
+      maxHeight: 60,
+      // maxWidth: 100
     },
     // expand: {
     //   transform: 'rotate(0deg)',
@@ -200,8 +205,7 @@ const styles = {
     });
   
     return (
-      <Card className={classes.root}>
-        {deleteButton}
+      <Card className={classes.card}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
@@ -220,9 +224,10 @@ const styles = {
                   >
                       {userHandle}
                   </Typography>}
+                  
           subheader={dayjs(createdAt).fromNow()}
         />
-        
+        {deleteButton}
         <div className={classes.listItems}>
         {listOfImages}
         </div>

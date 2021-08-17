@@ -18,3 +18,4 @@ export const SET_LIST = 'SET_LIST';
 export const LIKE_LIST = 'LIKE_LIST';
 export const UNLIKE_LIST = 'UNLIKE_LIST';
 export const DELETE_LIST = 'DELETE_LIST';
+export const POST_LIST = 'POST_LIST';

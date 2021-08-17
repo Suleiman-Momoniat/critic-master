@@ -1,4 +1,11 @@
-import { SET_LISTS, LIKE_LIST, UNLIKE_LIST, LOADING_DATA, DELETE_LIST } from "../types";
+import { 
+    SET_LISTS, 
+    LIKE_LIST, 
+    UNLIKE_LIST, 
+    LOADING_DATA, 
+    DELETE_LIST,
+    POST_LIST
+} from "../types";
 
 const initialState = {
     lists: [],
@@ -31,6 +38,14 @@ export default function(state= initialState, action){
             state.lists.splice(index, 1);
             return {
                 ...state
+            }
+        case POST_LIST:
+            return {
+                ...state,
+                lists: [
+                    action.payload,
+                    ...state.lists
+                ]
             }
         default: 
         return state;

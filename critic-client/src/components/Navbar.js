@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes  from 'prop-types';
 import MyButton from '../util/MyButton';
+import PostList from './PostList';
 
 // Material UI stuff
 import AppBar from '@material-ui/core/AppBar';
@@ -11,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import { Tooltip } from '@material-ui/core';
 
 //Icons
-import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import Notifications from '@material-ui/icons/Notifications';
 
@@ -26,9 +26,7 @@ class Navbar extends Component {
                     {authenticated ? 
                     (
                         <Fragment>
-                            <MyButton tip="Post a List">
-                                <AddIcon/>
-                            </MyButton>
+                            <PostList />
                             <Link to='/'>
                                 <MyButton tip="Home">
                                     <HomeIcon/>

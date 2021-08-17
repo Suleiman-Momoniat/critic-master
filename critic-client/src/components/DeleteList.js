@@ -15,9 +15,9 @@ import {deleteList} from '../redux/actions/dataActions';
 
 const styles = {
     deleteButton: {
-        position: 'absolute',
+        position: 'relative',
         left: '90%',
-        top: '13%'
+        bottom: '53%'
       }
 }
 
