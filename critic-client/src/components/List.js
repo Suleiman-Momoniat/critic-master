@@ -1,11 +1,24 @@
 import React, { Component, useState } from 'react'
 import withStyles  from '@material-ui/core/styles/withStyles'
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import MyButton from '../util/MyButton';
+
 // MUI Stuff
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+
+//Redux
+import {connect} from 'react-redux';
+import {likeList, unlikeList} from '../redux/actions/dataActions';
+
+//Icons
+import ChatIcon from '@material-ui/icons/Chat';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -36,10 +49,7 @@ const styles = {
     content: {
         padding: 25,
         objectFit: 'cover'
-    }
-}
-
-const useStyles = makeStyles((theme) => ({
+    },
     root: {
       maxWidth: 345,
     },
@@ -53,38 +63,130 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 100,
       minWidth: 100
     },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
+    // expand: {
+    //   transform: 'rotate(0deg)',
+    //   marginLeft: 'auto',
+    //   transition: theme.transitions.create('transform', {
+    //     duration: theme.transitions.duration.shortest,
+    //   }),
+    // },
     expandOpen: {
       transform: 'rotate(180deg)',
     },
     avatar: {
       backgroundColor: red[500],
     },
-  }));
+}
 
-  export default function List(list) {
+// const useStyles = makeStyles((theme) => ({
+//   card: {
+//     display: 'flex',
+//     marginBottom: 20,
+//     overflow: 'scroll',
+//     },
+//     image:{
+//         minWidth: 100,
+
+//     },
+//     content: {
+//         padding: 25,
+//         objectFit: 'cover'
+//     },
+//     root: {
+//       maxWidth: 345,
+//     },
+//     listItems:{
+//       display:'inline-flex',
+//       overflow:'scroll',
+//     },
+//     media: {
+//       // height: 0,
+//       paddingTop: '56.25%', // 16:9
+//       minHeight: 100,
+//       minWidth: 100
+//     },
+//     expand: {
+//       transform: 'rotate(0deg)',
+//       marginLeft: 'auto',
+//       transition: theme.transitions.create('transform', {
+//         duration: theme.transitions.duration.shortest,
+//       }),
+//     },
+//     expandOpen: {
+//       transform: 'rotate(180deg)',
+//     },
+//     avatar: {
+//       backgroundColor: red[500],
+//     },
+//   }));
+
+  class List extends Component{
+    likedList = () => {
+      if(this.props.user.likes && this.props.user.likes.find((like) => like.listId === this.props.list.listId)){
+        return true;
+      } else return false;
+    }
+
+    likeList = () => {
+      this.props.likeList(this.props.list.listId);
+    }
+
+    unlikeList = () => {
+      this.props.unlikeList(this.props.list.listId);
+    }
+    render(){
+    
+
     dayjs.extend(relativeTime);
-    const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+    //const classes = useStyles();
+    //const [expanded, setExpanded] = React.useState(false);
   
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
+    // const handleExpandClick = () => {
+    //   setExpanded(!expanded);
+    // };
 
-    const {movieList, 
-            createdAt, 
-            userImage, 
-            userHandle, 
-            listId, 
-            likeCount, 
-            commentCount} = list.list;
+    
+    const {
+      classes,
+      list: {
+        movieList, 
+        createdAt, 
+        userImage, 
+        userHandle, 
+        listId, 
+        likeCount, 
+        commentCount
+      },
+      user: {
+        authenticated
+      }
+  } = this.props;
+
+    // const {
+    //   user: {
+    //     authenticated
+    //   }
+    // } = this.props;
     // console.log(movieList[0].imageUrl);
+
+    const likeButton = !authenticated ? (
+      <MyButton tip="Like">
+        <Link to='/login'>
+          <FavoriteBorder color="primary"/>
+        </Link>
+      </MyButton>
+    ) : (
+      this.likedList() ? (
+        <MyButton tip="Unlike" onClick={this.unlikeList}>
+          <FavoriteIcon color="primary"/>
+        </MyButton>
+      ) : (
+        <MyButton tip="Like" onClick={this.likeList}>
+          <FavoriteBorder color="primary"/>
+        </MyButton>
+      )
+    )
+
     let listOfImages = [];
     const baseUrl = 'https://image.tmdb.org/t/p/w500/';
     movieList.forEach((movie)=>{
@@ -142,47 +244,31 @@ const useStyles = makeStyles((theme) => ({
           </IconButton>
           <IconButton aria-label="share">
           </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-          </IconButton>
+          
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-              minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-              heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-              browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-              and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-              pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-              saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-              medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-              again without stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don’t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then serve.
-            </Typography>
-          </CardContent>
-        </Collapse>
       </Card>
     );
+          }
   }
 
+  List.propTypes = {
+    likeList: PropTypes.func.isRequired,
+    unlikeList: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    list: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
+  };
+
+  const mapStateToProps = state => ({
+    user: state.user
+  });
+
+  const mapActionsToProps = {
+    likeList, 
+    unlikeList
+  }
+
+  export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(List));
 
 // export class List extends Component {
 
