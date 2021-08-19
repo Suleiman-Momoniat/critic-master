@@ -19,20 +19,22 @@ import CloseIcon from '@material-ui/icons/Close';
 
 //Redux stuff
 import {connect} from 'react-redux';
-import { postList} from '../redux/actions/dataActions';
+import { postList, clearErrors} from '../redux/actions/dataActions';
 
 const styles = theme => ({
     //...theme,
     submitButton: {
-        position: 'relative'
+        position: 'relative',
+        float: "right",
+        marginTop: 10
     },
     progressSpinner: {
         position: 'absolute'
     },
     closeButton: {
         position: 'absolute',
-        left: '90%',
-        top: '10%'
+        left: '91%',
+        top: '6%'
     }
 });
 
@@ -169,9 +171,10 @@ class PostList extends Component {
         };
         if(!nextProps.UI.errors && !nextProps.UI.loading){
             this.setState({
-                body: ''
+                body: '',
+                open:false, 
+                errors:{}
             });
-            this.handleClose();
         }
     }
     handleOpen = () => {
@@ -179,7 +182,7 @@ class PostList extends Component {
     }
     handleClose = () => {
         this.setState({open:false, errors:{}});
-
+        this.props.clearErrors();
     }
     handleChange = (event) => {
         this.setState({[event.target.name]:event.target.value})
@@ -242,6 +245,7 @@ class PostList extends Component {
 
 PostList.propTypes = ({
     postList: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired
 });
 
@@ -249,4 +253,4 @@ const mapStateToProps = (state) =>({
     UI: state.UI
 });
 
-export default connect(mapStateToProps, {postList})(withStyles(styles)(PostList));
+export default connect(mapStateToProps, {postList, clearErrors})(withStyles(styles)(PostList));
