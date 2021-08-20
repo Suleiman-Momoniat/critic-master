@@ -4,7 +4,8 @@ import {
     UNLIKE_LIST, 
     LOADING_DATA, 
     DELETE_LIST,
-    POST_LIST
+    POST_LIST,
+    SET_LIST
 } from "../types";
 
 const initialState = {
@@ -25,6 +26,11 @@ export default function(state= initialState, action){
                 ...state,
                 lists: action.payload,
                 loading: false
+            };
+        case SET_LIST:
+            return {
+                ...state,
+                list: action.payload,
             };
         case LIKE_LIST:
         case UNLIKE_LIST:

@@ -8,7 +8,9 @@ import {
     LOADING_UI,
     POST_LIST,
     SET_ERRORS,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    SET_LIST,
+    STOP_LOADING_UI
 } from '../types';
 import axios from 'axios';
 
@@ -29,6 +31,22 @@ export const getLists = () => (dispatch) =>{
         })
     })
 }
+
+export const getList = (listId) => (dispatch)=>{
+    dispatch({type:LOADING_UI});
+    axios.get(`/list/${listId}`)
+    .then((res)=>{
+        dispatch({
+            type: SET_LIST,
+            payload: res.data
+        });
+        dispatch({
+            type: STOP_LOADING_UI
+        });
+    })
+    .catch(err => console.log(err));
+}
+
 
 //Post a list
 export const postList = (newList) => (dispatch) => {
