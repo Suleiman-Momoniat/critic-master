@@ -36,6 +36,9 @@ export default function(state= initialState, action){
         case UNLIKE_LIST:
             let index = state.lists.findIndex((list)=>list.listId === action.payload.listId);
             state.lists[index] = action.payload;
+            if(state.list.listId === action.payload.listId){
+                state.list = action.payload;
+            }
             return {
                 ...state,
             };

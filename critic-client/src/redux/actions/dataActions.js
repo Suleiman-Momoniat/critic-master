@@ -3,7 +3,6 @@ import {
     LOADING_DATA, 
     LIKE_LIST, 
     UNLIKE_LIST, 
-    LOADING_USER, 
     DELETE_LIST, 
     LOADING_UI,
     POST_LIST,

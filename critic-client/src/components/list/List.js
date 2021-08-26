@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import withStyles  from '@material-ui/core/styles/withStyles'
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 import DeleteList from './DeleteList';
 import ListDialog from './ListDialog';
+import LikeButton from './LikeButton';
 
 // MUI Stuff
 import Card from '@material-ui/core/Card';
@@ -14,30 +15,19 @@ import Typography from '@material-ui/core/Typography';
 
 //Redux
 import {connect} from 'react-redux';
-import {likeList, unlikeList} from '../redux/actions/dataActions';
+import {likeList, unlikeList} from '../../redux/actions/dataActions';
 
 //Icons
 import ChatIcon from '@material-ui/icons/Chat';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
-
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
-// import FavoriteIcon from '@material-ui/icons/Favorite';
-// import ShareIcon from '@material-ui/icons/Share';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { color } from '@material-ui/system';
 
 const styles = {
     card: {
@@ -131,19 +121,7 @@ const styles = {
 //   }));
 
   class List extends Component{
-    likedList = () => {
-      if(this.props.user.likes && this.props.user.likes.find((like) => like.listId === this.props.list.listId)){
-        return true;
-      } else return false;
-    }
-
-    likeList = () => {
-      this.props.likeList(this.props.list.listId);
-    }
-
-    unlikeList = () => {
-      this.props.unlikeList(this.props.list.listId);
-    }
+    
     render(){
     
 
@@ -172,23 +150,7 @@ const styles = {
       }
   } = this.props;
 
-    const likeButton = !authenticated ? (
-      <MyButton tip="Like">
-        <Link to='/login'>
-          <FavoriteBorder color="primary"/>
-        </Link>
-      </MyButton>
-    ) : (
-      this.likedList() ? (
-        <MyButton tip="Unlike" onClick={this.unlikeList}>
-          <FavoriteIcon color="primary"/>
-        </MyButton>
-      ) : (
-        <MyButton tip="Like" onClick={this.likeList}>
-          <FavoriteBorder color="primary"/>
-        </MyButton>
-      )
-    );
+    
 
     const deleteButton = authenticated && userHandle === handle ? (
       <DeleteList listId={listId}/>
@@ -246,7 +208,7 @@ const styles = {
           </IconButton>
           <IconButton aria-label="share">
           </IconButton>
-          {likeButton}
+          <LikeButton listId={listId}/>
           <span>{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
           <MyButton tip="comments">
             <ChatIcon color='primary'/>

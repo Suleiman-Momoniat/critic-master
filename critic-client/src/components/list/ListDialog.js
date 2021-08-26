@@ -1,15 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 import dayjs from 'dayjs';
 import {Link} from 'react-router-dom';
-
+import Comments from './Comments';
 //MUI stuff
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography  from '@material-ui/core/Typography';
@@ -17,10 +15,13 @@ import Typography  from '@material-ui/core/Typography';
 //Icons
 import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
+import ChatIcon from '@material-ui/icons/Chat';
+
 
 //Redux stuff
 import { connect } from 'react-redux';
-import {getList} from '../redux/actions/dataActions';
+import {getList} from '../../redux/actions/dataActions';
+import  LikeButton  from './LikeButton';
 
 const styles = theme => ({
     //...theme,
@@ -28,6 +29,11 @@ const styles = theme => ({
         border: 'none',
         margin: 4
     },
+    visibleSeparator: {
+        width: '100%',
+        borderBottom: '1px solid rgba(0,0,0,0.1)',
+        marginBottom: 20
+      },
     profileImage:{
         maxWidth:200,
         maxHeight: 200,
@@ -40,6 +46,15 @@ const styles = theme => ({
     closeButton: {
         position: 'absolute',
         left: '90%'
+    },
+    expandButton: {
+        position: 'absolute',
+        left: '50%'
+    },
+    spinnerDiv: {
+        textAlign: 'center',
+        marginTop: 50,
+        marginBottom: 50
     }
 });
 
@@ -55,10 +70,25 @@ class ListDialog extends Component{
         this.setState({open: false});
     }
     render(){
-        const {classes, list: {listId, movieList, createdAt, likeCount, commentCount, userImage, userHandle}, UI: {loading}} = this.props;
+        const {classes, 
+            list: {
+                listId, 
+                //movieList, 
+                createdAt, 
+                likeCount, 
+                commentCount, 
+                comments,
+                userImage, 
+                userHandle
+            }, UI: {
+                loading
+            }
+        } = this.props;
 
         const dialogMarkup = loading ? (
-        <CircularProgress size={200}/>
+            <div className={classes.spinnerDiv}>
+                <CircularProgress size={200} thickness={2}/>
+            </div>
         )
         :
         (
@@ -86,9 +116,15 @@ class ListDialog extends Component{
                         <Typography variant="body1">
                             THIS IS WHERE MOVIE LIST WILL GO
                         </Typography>
-
-
+                        <LikeButton listId={listId}/>
+                        <span>{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
+                        <MyButton tip="comments">
+                            <ChatIcon color='primary'/>
+                        </MyButton>
+                        <span>{commentCount} Comments</span>
                 </Grid>
+                <hr className={classes.visibleSeparator}/>
+                <Comments comments={comments}/>
             </Grid>
 
                         
@@ -97,7 +133,7 @@ class ListDialog extends Component{
 
         return (
             <Fragment>
-                <MyButton onClick={this.handleOpen} tip='Expand List' tipCLassName = {classes.expandButton}>
+                <MyButton onClick={this.handleOpen} tip='Expand List' tipClassName = {classes.expandButton}>
                     <UnfoldMore color="primary"/>
                 </MyButton>
                 <Dialog
