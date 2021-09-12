@@ -213,7 +213,7 @@ const styles = {
           <MyButton tip="comments">
             <ChatIcon color='primary'/>
           </MyButton>
-          <span>{commentCount} Comments</span>
+          <span>{commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}</span>
           <ListDialog listId={listId} userHandle={userHandle}/>
         </CardActions>
       </Card>

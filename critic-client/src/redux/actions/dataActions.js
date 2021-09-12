@@ -9,7 +9,8 @@ import {
     SET_ERRORS,
     CLEAR_ERRORS,
     SET_LIST,
-    STOP_LOADING_UI
+    STOP_LOADING_UI,
+    SUBMIT_COMMENT
 } from '../types';
 import axios from 'axios';
 
@@ -56,9 +57,7 @@ export const postList = (newList) => (dispatch) => {
             type: POST_LIST,
             payload: res.data
         });
-        dispatch({
-            type: CLEAR_ERRORS
-        });
+        dispatch(clearErrors());
     })
     .catch(err => {
         dispatch({
@@ -92,6 +91,24 @@ export const unlikeList = (listId) => (dispatch) => {
     .catch(err=>console.log(err));
 }
 
+// Submit a comment
+export const submitComment = (listId, commentData) => (dispatch) => {
+    axios.post(`/list/${listId}/comment`, commentData)
+    .then(res=>{
+        dispatch({
+            type: SUBMIT_COMMENT,
+            payload: res.data
+        });
+        dispatch(clearErrors());
+    })
+    .catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+    })
+}
+
 // Delete List
 export const deleteList = (listId) => (dispatch) => {
     axios.delete(`/list/${listId}`)
@@ -99,6 +116,23 @@ export const deleteList = (listId) => (dispatch) => {
         dispatch({type: DELETE_LIST, payload: listId})
     })
     .catch(err => console.log(err));
+}
+
+export const getUserData = (userHandle) => (dispatch)=>{
+    dispatch({type: LOADING_DATA});
+    axios.get(`/user/${userHandle}`)
+    .then(res =>{
+        dispatch({ 
+            type: SET_LISTS,
+            payload: res.data.Lists
+        });
+    })
+    .catch(()=>{
+        dispatch({
+            type: SET_LISTS,
+            payload: null
+        });
+    });
 }
 
 export const clearErrors = () => (dispatch) => {

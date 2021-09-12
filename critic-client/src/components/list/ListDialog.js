@@ -5,6 +5,7 @@ import MyButton from '../../util/MyButton';
 import dayjs from 'dayjs';
 import {Link} from 'react-router-dom';
 import Comments from './Comments';
+import CommentForm from './CommentForm';
 //MUI stuff
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -20,7 +21,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 //Redux stuff
 import { connect } from 'react-redux';
-import {getList} from '../../redux/actions/dataActions';
+import {getList, clearErrors} from '../../redux/actions/dataActions';
 import  LikeButton  from './LikeButton';
 
 const styles = theme => ({
@@ -68,6 +69,7 @@ class ListDialog extends Component{
     }
     handleClose = () => {
         this.setState({open: false});
+        this.props.clearErrors();
     }
     render(){
         const {classes, 
@@ -121,9 +123,10 @@ class ListDialog extends Component{
                         <MyButton tip="comments">
                             <ChatIcon color='primary'/>
                         </MyButton>
-                        <span>{commentCount} Comments</span>
+                        <span>{commentCount} {commentCount===1 ? 'Comment':'Comments'}</span>
                 </Grid>
                 <hr className={classes.visibleSeparator}/>
+                <CommentForm listId={listId}/>
                 <Comments comments={comments}/>
             </Grid>
 
@@ -156,6 +159,7 @@ class ListDialog extends Component{
 }
 
 ListDialog.propTypes = {
+    clearErrors: PropTypes.func.isRequired,
     getList: PropTypes.func.isRequired,
     listId: PropTypes.string.isRequired,
     userHandle: PropTypes.string.isRequired,
@@ -168,7 +172,8 @@ const mapStateToProps = (state)=>({
 })
 
 const mapActionsToProps = {
-    getList
+    getList,
+    clearErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(ListDialog));
