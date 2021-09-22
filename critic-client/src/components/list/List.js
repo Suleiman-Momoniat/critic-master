@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import withStyles  from '@material-ui/core/styles/withStyles'
+import React, { Component } from 'react';
+import withStyles  from '@material-ui/core/styles/withStyles';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyButton from '../../util/MyButton';
@@ -214,7 +214,7 @@ const styles = {
             <ChatIcon color='primary'/>
           </MyButton>
           <span>{commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}</span>
-          <ListDialog listId={listId} userHandle={userHandle}/>
+          <ListDialog listId={listId} userHandle={userHandle} openDialog={this.props.openDialog}/>
         </CardActions>
       </Card>
     );
@@ -226,7 +226,8 @@ const styles = {
     unlikeList: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     list: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    openDialog: PropTypes.bool
   };
 
   const mapStateToProps = state => ({

@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 
 import List from '../components/list/List';
 import Profile from '../components/profile/Profile';
+import ListSkeleton from '../util/ListSkeleton';
 
 import {connect} from 'react-redux';
 import {getLists} from '../redux/actions/dataActions';
@@ -16,7 +17,9 @@ class home extends Component {
         const { lists, loading} = this.props.data;
         let recentListsMarkup = !loading ? (
             lists.map(list => <List key={list.listId} list={list} />)
-        ):<p>Loading...</p>;
+        ):(
+            <ListSkeleton/>
+            );
         return (
             <Grid container spacing={16}>
                 <Grid item sm={8} xs={12}>

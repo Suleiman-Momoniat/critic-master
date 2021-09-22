@@ -63,6 +63,7 @@ class App extends Component{
                   component={signup} 
                   />
                   <Route exact path="/users/:handle" component={user}/>
+                  <Route exact path="/users/:handle/list/:listId" component={user}/>
                 </Switch>
               </div>
             </Router>

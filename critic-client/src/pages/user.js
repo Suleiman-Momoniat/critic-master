@@ -4,16 +4,24 @@ import axios from 'axios';
 import List from '../components/list/List';
 import Grid from '@material-ui/core/Grid';
 import StaticProfile from '../components/profile/StaticProfile';
+import ListSkeleton from '../util/ListSkeleton';
+import ProfileSkeleton from '../util/ProfileSkeleton';
+
 
 import {connect} from 'react-redux';
 import {getUserData} from '../redux/actions/dataActions';
 
 class user extends Component {
     state = {
-        profile: null
+        profile: null,
+        listIdParam: null
     }
     componentDidMount(){
         const handle = this.props.match.params.handle;
+        const listId = this.props.match.params.listId;
+
+        if (listId) this.setState({listIdParam: listId});
+
         this.props.getUserData(handle);
         axios.get(`/user/${handle}`)
         .then(res => {
@@ -27,13 +35,22 @@ class user extends Component {
     }
     render() {
         const {lists, loading} = this.props.data;
+        const {listIdParam} = this.state;
         
         const listsMarkup = loading ? (
-            <p> Loading data...</p>
+            <ListSkeleton/>
         ) : lists === null ? (
             <p>No Lists</p>
-        ) : (
+        ) : !listIdParam ? (
             lists.map(list => <List key={list.listId} list={list} />)
+        ) : (
+            lists.map(list =>{
+                if(list.listId !== listIdParam){
+                    return <List key={list.listId} list={list} />;
+                } else {
+                    return <List key={list.listId} list={list} openDialog/>;
+                }
+            })
         )
         return (
             <Grid container spacing={16}>
@@ -42,7 +59,7 @@ class user extends Component {
             </Grid>
             <Grid item sm={4} xs={12}>
                 {this.state.profile === null ? (
-                        <p>Loading Profile</p>
+                        <ProfileSkeleton/>
                     ): (
                         <StaticProfile profile={this.state.profile} />
                     )
