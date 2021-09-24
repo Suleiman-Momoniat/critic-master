@@ -19,6 +19,7 @@ import CloseIcon from '@material-ui/icons/Close';
 //Redux stuff
 import {connect} from 'react-redux';
 import { postList, clearErrors} from '../../redux/actions/dataActions';
+import SearchBar from './SearchBar';
 
 const styles = theme => ({
     //...theme,
@@ -208,14 +209,14 @@ class PostList extends Component {
                         <CloseIcon/>
                     </MyButton>
                     <DialogTitle>
-                        Post a new list
+                        Create a New List
                     </DialogTitle>
                     <DialogContent>
                         <form onSubmit={this.handleSubmit}>
                             <TextField
                             name="title"
                             type="text"
-                            label="Title"
+                            label="Give your list a title"
                             placeholder="Top Movies"
                             //NOT SURE ABOUT THIS BELOW
                             error={errors.body ? true: false}
@@ -224,6 +225,7 @@ class PostList extends Component {
                             onChange={this.handleChange}
                             fullWidth
                             />
+                            <SearchBar/>
                             <Button 
                             type="submit" 
                             variant="contained" 
