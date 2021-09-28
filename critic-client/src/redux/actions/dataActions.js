@@ -53,6 +53,7 @@ export const postList = (newList) => (dispatch) => {
     dispatch({type: LOADING_UI});
     axios.post('/list', newList)
     .then(res => {
+        console.log('POSTED');
         dispatch({
             type: POST_LIST,
             payload: res.data
@@ -60,6 +61,7 @@ export const postList = (newList) => (dispatch) => {
         dispatch(clearErrors());
     })
     .catch(err => {
+        console.log(`ERR: ${err}`);
         dispatch({
             type: SET_ERRORS,
             payload: err.response.data

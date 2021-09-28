@@ -161,7 +161,7 @@ const styles = {
     movieList.forEach((movie)=>{
       listOfImages.push(<CardMedia
           className={classes.media}
-          image={baseUrl + movie.imageUrl}
+          image={movie.imageUrl ? baseUrl + movie.imageUrl : baseUrl +movie.poster_path}
           title={movie.title}
         />);
 

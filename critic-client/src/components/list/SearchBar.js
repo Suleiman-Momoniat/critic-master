@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { postList, clearErrors} from '../../redux/actions/dataActions';
+
 import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField';
 import { yellow } from '@material-ui/core/colors';
@@ -17,7 +22,12 @@ const styles = theme => ({
     searchMovieTile: {
         display: 'flex',
         // float: 'left',
-    }
+    },
+    submitButton: {
+        position: 'relative',
+        float: "right",
+        marginTop: 10
+    },
 });
 
 class SearchBar extends React.Component{
@@ -93,7 +103,21 @@ class SearchBar extends React.Component{
         }));
         console.log(`State: ${this.state.listBeingCreated}`);
     }
+    handleSubmit = (event) => {
+        //event.preventDefault();
+        
+        const ObjectToSubmit = {
+            movieList: this.state.listBeingCreated,
+            userHandle: 'user',
+            createdAt: new Date(),
+            likeCount: 0,
+            commentCount: 0 
+         }
+         console.log(`Submitting: ${ObjectToSubmit}`)
+        this.props.postList(ObjectToSubmit);    
+    }
     render(){
+        const {errors} = this.state;
         const {classes, UI: {loading}} = this.props;
         let itemsInList = this.state.listBeingCreated.length > 0 ?  this.state.listBeingCreated.map((item, index) => {
             //console.log(item);
@@ -106,7 +130,7 @@ class SearchBar extends React.Component{
             null
         );   
         return(
-            <form onSubmit={this.submitSearch}>
+            <form onSubmit={this.handleSubmit}>
             <label htmlFor="searchTerm">
                 {/* <TextField id="standard-basic" label="Movie" variant="standard" /> */}
                 {
@@ -145,12 +169,24 @@ class SearchBar extends React.Component{
                     searchResult.onClick = this.pushToList(searchResult);
                 })} */}
             </label>
+            <Button 
+                type="submit" 
+                variant="contained" 
+                color="primary"
+                className={classes.submitButton}
+                disabled={loading}>
+                    Submit
+                {loading && (<CircularProgress size={30} className={classes.progressSpinner}/>) }
+            </Button>
             </form>
+            
         )
         }
     }
 
 SearchBar.propTypes = ({
+    postList: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired
 });
 
@@ -158,4 +194,4 @@ const mapStateToProps = (state) =>({
     UI: state.UI
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(SearchBar));
+export default connect(mapStateToProps, {postList, clearErrors})(withStyles(styles)(SearchBar));
