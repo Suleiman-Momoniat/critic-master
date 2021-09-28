@@ -14,6 +14,8 @@ import { Tooltip } from '@material-ui/core';
 
 //Icons
 import HomeIcon from '@material-ui/icons/Home';
+import ProfileIcon from '@material-ui/icons/Person';
+
 
 
 
@@ -32,7 +34,13 @@ class Navbar extends Component {
                                 <MyButton tip="Home">
                                     <HomeIcon/>
                                 </MyButton>
-                            </Link>        
+                            </Link>   
+                            <Link to='/profile'>
+                                <MyButton tip="Profile">
+                                    <ProfileIcon/>
+                                </MyButton>
+                            </Link>  
+
                             <Notifications/>
                         </Fragment>
                     )

@@ -9,7 +9,7 @@ import ListSkeleton from '../util/ListSkeleton';
 import {connect} from 'react-redux';
 import {getLists} from '../redux/actions/dataActions';
 
-class home extends Component {
+class profile extends Component {
     componentDidMount(){
         this.props.getLists();
     }
@@ -21,9 +21,7 @@ class home extends Component {
             <ListSkeleton/>
             );
         return (
-            <div>
-                {recentListsMarkup}
-            </div>
+            <Profile />
             // <Grid container spacing={16}>
             //     <Grid item sm={7} xs={12}>
             //         {recentListsMarkup}
@@ -39,7 +37,7 @@ class home extends Component {
     }
 }
 
-home.propTypes = {
+profile.propTypes = {
     getLists: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired
 };
@@ -48,4 +46,4 @@ const mapStateToProps = state => ({
     data: state.data
 })
 
-export default connect(mapStateToProps, {getLists})(home);
+export default connect(mapStateToProps, {getLists})(profile);

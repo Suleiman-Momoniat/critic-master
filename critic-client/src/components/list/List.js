@@ -74,7 +74,7 @@ const styles = {
       transform: 'rotate(180deg)',
     },
     avatar: {
-      backgroundColor: red[500],
+      // backgroundColor: red[500],
     },
 }
 
@@ -172,7 +172,7 @@ const styles = {
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              M
+              <img src={userImage} alt='Profile Picture' width='60'/>
             </Avatar>
           }
           action={

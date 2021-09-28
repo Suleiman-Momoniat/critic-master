@@ -23,6 +23,7 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user';
+import profile from './pages/profile';
 
 
 import axios from 'axios';
@@ -61,6 +62,11 @@ class App extends Component{
                   exact 
                   path="/signup" 
                   component={signup} 
+                  />
+                   <Route 
+                  exact 
+                  path="/profile" 
+                  component={profile} 
                   />
                   <Route exact path="/users/:handle" component={user}/>
                   <Route exact path="/users/:handle/list/:listId" component={user}/>
