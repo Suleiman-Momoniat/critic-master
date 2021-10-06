@@ -95,13 +95,13 @@ class SearchBar extends React.Component{
         })
     }
     pushToList = (movie) =>{
-        //console.log('clicked'); 
-        console.log(`${movie}`);
-        //console.log(index);
-        this.setState(prevState => ({
-            listBeingCreated: [...prevState.listBeingCreated, movie]
-        }));
-        console.log(`State: ${this.state.listBeingCreated}`);
+        
+        // if(this.state.listBeingCreated.some(m => m.title === movie.title).length === 0){
+        //     this.setState(prevState => ({
+        //         listBeingCreated: [...prevState.listBeingCreated, movie]
+        //     }));
+        //     console.log(`State: ${this.state.listBeingCreated}`);
+        // }
     }
     handleSubmit = (event) => {
         //event.preventDefault();
@@ -114,7 +114,11 @@ class SearchBar extends React.Component{
             commentCount: 0 
          }
          console.log(`Submitting: ${ObjectToSubmit}`)
-        this.props.postList(ObjectToSubmit);    
+        this.props.postList(ObjectToSubmit); 
+        this.setState({
+            listBeingCreated: [],
+        })
+         
     }
     render(){
         const {errors} = this.state;

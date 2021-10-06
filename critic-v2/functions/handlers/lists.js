@@ -17,6 +17,8 @@ exports.getAllLists = (req, res)=>{
             likeCount: doc.data().likeCount,
             type: doc.data().type,
             userImage: doc.data().userImage,
+            listTitle: doc.data().listTitle,
+            listDescription: doc.data().listDescription,
           });
         });
         return res.json(lists);
@@ -34,6 +36,8 @@ exports.postOneList = (req, res)=>{
     movieList: req.body.movieList,
     userHandle: req.user.handle,
     userImage: req.user.imageUrl,
+    listTitle: req.body.listTitle,
+    listDescription: req.body.listDescription,
     createdAt: new Date().toISOString(),
     likeCount: 0,
     commentCount: 0,

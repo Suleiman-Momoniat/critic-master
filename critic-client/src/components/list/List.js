@@ -33,15 +33,25 @@ const styles = {
     card: {
       //position: 'relative',
       // display: 'flex',
-      marginBottom: 20,
+      // marginBottom: 20,
       overflow: 'scroll',
       //width: '40'
+      margin: '20px 40px',
+      padding: '30px',
     },
-    image:{
+    media:{
         // minWidth: 100,
         // minHeight: 100,
-        maxWidth: 100,
-        maxHeight: 100
+        // maxWidth: 100,
+        // maxHeight: 100
+        width: 100,
+        height: 100,
+        paddingTop: '56.25%', // 16:9
+      // minHeight: 50,
+      // minWidth: 100,
+      // maxHeight: 60,
+      textAlign: 'center'
+        
 
     },
     content: {
@@ -55,14 +65,6 @@ const styles = {
       display:'inline-flex',
       overflow:'scroll',
     },
-    media: {
-      // height: 0,
-      paddingTop: '56.25%', // 16:9
-      minHeight: 50,
-      minWidth: 100,
-      maxHeight: 60,
-      // maxWidth: 100
-    },
     // expand: {
     //   transform: 'rotate(0deg)',
     //   marginLeft: 'auto',
@@ -73,9 +75,12 @@ const styles = {
     expandOpen: {
       transform: 'rotate(180deg)',
     },
-    avatar: {
-      // backgroundColor: red[500],
+    body:{
+      backgroundColor: 'lightgray',
     },
+    listTitle: {
+
+    }
 }
 
 // const useStyles = makeStyles((theme) => ({
@@ -123,32 +128,25 @@ const styles = {
   class List extends Component{
     
     render(){
-    
-
-    dayjs.extend(relativeTime);
-    //const classes = useStyles();
-    //const [expanded, setExpanded] = React.useState(false);
-  
-    // const handleExpandClick = () => {
-    //   setExpanded(!expanded);
-    // };
-
-    
-    const {
-      classes,
-      list: {
-        movieList, 
-        createdAt, 
-        userImage, 
-        userHandle, 
-        listId, 
-        likeCount, 
-        commentCount
-      },
-      user: {
-        authenticated, credentials : { handle }
-      }
-  } = this.props;
+      dayjs.extend(relativeTime);
+      
+      const {
+        classes,
+        list: {
+          movieList, 
+          createdAt, 
+          userImage, 
+          userHandle, 
+          listId, 
+          likeCount, 
+          commentCount,
+          listTitle,
+          listDescription
+        },
+        user: {
+          authenticated, credentials : { handle }
+        }
+    } = this.props;
 
     
 
@@ -190,17 +188,23 @@ const styles = {
                   
           subheader={dayjs(createdAt).fromNow()}
         />
+        <div className='listTitle'>
+          <Typography variant="h6" color="textPrimary" component="p">
+              {listTitle || "Top Movies"}
+          </Typography>
+        </div>
+        <hr />
+
         {deleteButton}
+        
         <div className={classes.listItems}>
         {listOfImages}
         </div>
+        <hr />
         <CardContent>
-        <Typography variant="body3" color="textPrimary" component="p">
-            Top Movies
-          </Typography>
+        
           <Typography variant="body2" color="textSecondary" component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            {listDescription || "List Description"}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
