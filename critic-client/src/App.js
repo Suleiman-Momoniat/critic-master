@@ -28,6 +28,8 @@ import profile from './pages/profile';
 
 import axios from 'axios';
 
+axios.defaults.baseUrl = "https://us-central1-critic-v2.cloudfunctions.net/api";
+
 const theme = createMuiTheme(themeFile);
 
 const token = localStorage.FBIdToken;

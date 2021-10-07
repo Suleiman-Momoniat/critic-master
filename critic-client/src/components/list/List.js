@@ -31,99 +31,28 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 const styles = {
     card: {
-      //position: 'relative',
-      // display: 'flex',
-      // marginBottom: 20,
-      overflow: 'scroll',
-      //width: '40'
       margin: '20px 40px',
       padding: '30px',
+      overflowY: 'scroll',
+    },
+    listItems:{
+      height: '300px',
+      overflowY: 'auto',
+      whiteSpace: 'nowrap',
     },
     media:{
-        // minWidth: 100,
-        // minHeight: 100,
-        // maxWidth: 100,
-        // maxHeight: 100
-        width: 100,
-        height: 100,
-        paddingTop: '56.25%', // 16:9
-      // minHeight: 50,
-      // minWidth: 100,
-      // maxHeight: 60,
+      width: 100,
+      height: '20px',
+      paddingTop: '56.25%',
       textAlign: 'center'
-        
-
-    },
-    content: {
-        padding: 25,
-        objectFit: 'cover'
-    },
-    // root: {
-    //   maxWidth: 345,
-    // },
-    listItems:{
-      display:'inline-flex',
-      overflow:'scroll',
-    },
-    // expand: {
-    //   transform: 'rotate(0deg)',
-    //   marginLeft: 'auto',
-    //   transition: theme.transitions.create('transform', {
-    //     duration: theme.transitions.duration.shortest,
-    //   }),
-    // },
+  },
     expandOpen: {
       transform: 'rotate(180deg)',
     },
     body:{
       backgroundColor: 'lightgray',
     },
-    listTitle: {
-
-    }
 }
-
-// const useStyles = makeStyles((theme) => ({
-//   card: {
-//     display: 'flex',
-//     marginBottom: 20,
-//     overflow: 'scroll',
-//     },
-//     image:{
-//         minWidth: 100,
-
-//     },
-//     content: {
-//         padding: 25,
-//         objectFit: 'cover'
-//     },
-//     root: {
-//       maxWidth: 345,
-//     },
-//     listItems:{
-//       display:'inline-flex',
-//       overflow:'scroll',
-//     },
-//     media: {
-//       // height: 0,
-//       paddingTop: '56.25%', // 16:9
-//       minHeight: 100,
-//       minWidth: 100
-//     },
-//     expand: {
-//       transform: 'rotate(0deg)',
-//       marginLeft: 'auto',
-//       transition: theme.transitions.create('transform', {
-//         duration: theme.transitions.duration.shortest,
-//       }),
-//     },
-//     expandOpen: {
-//       transform: 'rotate(180deg)',
-//     },
-//     avatar: {
-//       backgroundColor: red[500],
-//     },
-//   }));
 
   class List extends Component{
     
@@ -147,8 +76,6 @@ const styles = {
           authenticated, credentials : { handle }
         }
     } = this.props;
-
-    
 
     const deleteButton = authenticated && userHandle === handle ? (
       <DeleteList listId={listId}/>
