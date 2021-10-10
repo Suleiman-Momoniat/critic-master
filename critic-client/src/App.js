@@ -28,7 +28,7 @@ import profile from './pages/profile';
 
 import axios from 'axios';
 
-axios.defaults.baseUrl = "https://us-central1-critic-v2.cloudfunctions.net/api";
+axios.defaults.baseURL = "https://us-central1-critic-v2.cloudfunctions.net/api";
 
 const theme = createMuiTheme(themeFile);
 

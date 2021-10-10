@@ -230,6 +230,15 @@ class PostList extends Component {
                                 fullWidth
                             />
 
+                            <Input
+                                    id="listDescription"
+                                    fullWidth
+                                    placeholder="Description"
+                                    value={this.state.listDescription}
+                                    onChange={this.handleChange}
+                                    multiline
+                                    rows={4}
+                                />
                             <label htmlFor="searchTerm">
                                 {/* Showing the list */}
                                 {
@@ -242,15 +251,7 @@ class PostList extends Component {
                                     )
                                 }
 
-                                <Input
-                                    id="listDescription"
-                                    fullWidth
-                                    placeholder="Description"
-                                    value={this.state.listDescription}
-                                    onChange={this.handleChange}
-                                    multiline
-                                    rows={4}
-                                />
+                                
 
                                 <form onSubmit={this.submitSearch}>
                                 <Input
