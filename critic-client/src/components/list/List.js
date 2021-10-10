@@ -39,12 +39,14 @@ const styles = {
       height: '300px',
       overflowY: 'auto',
       whiteSpace: 'nowrap',
+      objectFit: 'cover',
     },
     media:{
-      width: 100,
-      height: '20px',
+      width: '300px',
+      height: '300px',
       paddingTop: '56.25%',
-      textAlign: 'center'
+      textAlign: 'center',
+      
   },
     expandOpen: {
       transform: 'rotate(180deg)',
@@ -52,6 +54,9 @@ const styles = {
     body:{
       backgroundColor: 'lightgray',
     },
+    movieCard:{
+      display: 'inline-flex',
+    }
 }
 
   class List extends Component{
@@ -84,11 +89,27 @@ const styles = {
     let listOfImages = [];
     const baseUrl = 'https://image.tmdb.org/t/p/w500/';
     movieList.forEach((movie)=>{
-      listOfImages.push(<CardMedia
-          className={classes.media}
-          image={movie.imageUrl ? baseUrl + movie.imageUrl : baseUrl +movie.poster_path}
-          title={movie.title}
-        />);
+      listOfImages.push(
+      // <CardMedia
+      //     className={classes.media}
+      //     image={movie.imageUrl ? baseUrl + movie.imageUrl : baseUrl +movie.poster_path}
+      //     title={movie.title}
+      //     children={
+      //       <div>
+      //         Hello
+      //       </div>
+      //     }
+      //   />
+      <div >
+        <div className={classes.movieCard}>
+          <img src={movie.imageUrl ? baseUrl + movie.imageUrl : baseUrl +movie.poster_path} alt={movie.title} />
+        </div>
+        <div className={classes.movieCard}>
+          {movie.title}
+          {movie.rating}
+        </div>
+      </div>
+        );
 
     });
   
