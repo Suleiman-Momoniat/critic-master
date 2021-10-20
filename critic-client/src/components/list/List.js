@@ -36,6 +36,7 @@ const styles = {
     margin: '20px 40px',
     padding: '30px',
     overflowY: 'scroll',
+    backgroundColor: '#bbbbbb'
   },
   listItems: {
     height: '300px',
@@ -174,10 +175,10 @@ class List extends Component {
           <LikeButton listId={listId} />
           <span>{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
           <MyButton tip="comments">
-            <ChatIcon color='primary' />
+            {/* <ChatIcon color='primary' /> */}
+            <ListDialog listId={listId} userHandle={userHandle} openDialog={this.props.openDialog} />
           </MyButton>
           <span>{commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}</span>
-          <ListDialog listId={listId} userHandle={userHandle} openDialog={this.props.openDialog} />
         </CardActions>
       </Card>
     );

@@ -92,6 +92,7 @@ class ListDialog extends Component{
         const {classes, 
             list: {
                 listId, 
+                listTitle,
                 //movieList, 
                 createdAt, 
                 likeCount, 
@@ -133,7 +134,7 @@ class ListDialog extends Component{
                         </Typography>
                         <hr className={classes.invisibleSeparator}/>
                         <Typography variant="body1">
-                            THIS IS WHERE MOVIE LIST WILL GO
+                            {listTitle}
                         </Typography>
                         <LikeButton listId={listId}/>
                         <span>{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
@@ -153,7 +154,7 @@ class ListDialog extends Component{
 
         return (
             <Fragment>
-                <MyButton onClick={this.handleOpen} tip='Expand List' tipClassName = {classes.expandButton}>
+                <MyButton onClick={this.handleOpen}>
                     <UnfoldMore color="primary"/>
                 </MyButton>
                 <Dialog

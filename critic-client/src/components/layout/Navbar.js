@@ -16,15 +16,16 @@ import { Tooltip } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import ProfileIcon from '@material-ui/icons/Person';
 
-
-
-
-
 class Navbar extends Component {
     render() {
         const {authenticated} = this.props;
         return (
-            <AppBar>
+            <AppBar 
+            color='primary'
+            sx={{
+                height: '50px'
+            }}
+            >
                 <Toolbar className="nav-container">
                     {authenticated ? 
                     (

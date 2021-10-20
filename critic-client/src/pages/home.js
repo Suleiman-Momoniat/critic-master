@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Grid from '@material-ui/core/Grid';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { PropTypes } from 'prop-types';
 
 import List from '../components/list/List';
@@ -9,11 +9,19 @@ import ListSkeleton from '../util/ListSkeleton';
 import {connect} from 'react-redux';
 import {getLists} from '../redux/actions/dataActions';
 
+const styles = (theme) => ({
+    ...theme.spreadThis,
+    home: {
+        backgroundColor: '#121212'
+    }
+});
+
 class home extends Component {
     componentDidMount(){
         this.props.getLists();
     }
     render() {
+        const { classes } = this.props;
         const { lists, loading} = this.props.data;
         let recentListsMarkup = !loading ? (
             lists.map(list => <List key={list.listId} list={list} />)
@@ -21,20 +29,9 @@ class home extends Component {
             <ListSkeleton/>
             );
         return (
-            <div>
+            <div className={classes.home}>
                 {recentListsMarkup}
             </div>
-            // <Grid container spacing={16}>
-            //     <Grid item sm={7} xs={12}>
-            //         {recentListsMarkup}
-            //     </Grid>
-            //     <Grid item sm={1} xs={12}>
-                    
-            //     </Grid>
-            //     <Grid item sm={4} xs={12}>
-            //         <Profile />
-            //     </Grid>
-            // </Grid> 
         );
     }
 }
@@ -48,4 +45,6 @@ const mapStateToProps = state => ({
     data: state.data
 })
 
-export default connect(mapStateToProps, {getLists})(home);
+export default connect(mapStateToProps, {getLists})(withStyles(styles)(home));
+
+// export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));
