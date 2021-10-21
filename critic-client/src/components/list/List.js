@@ -57,6 +57,12 @@ const styles = {
   body: {
     backgroundColor: 'lightgray',
   },
+  interaction_buttons: {
+    position: 'relative',
+    width: '100%',
+    margin: 'auto',
+    textAlign: 'center'
+  }
 }
 
 class List extends Component {
@@ -82,6 +88,30 @@ class List extends Component {
       }
     } = this.props;
 
+    
+    const genres = {
+      28: 'Action',
+      12: 'Adventure',
+      16: 'Animation',
+      35: 'Comedy',
+      80: 'Crime',
+      99: 'Documentary',
+      18: 'Drama',
+      10751: 'Family',
+      14: 'Fantasy',
+      36: 'History',
+      27: 'Horror',
+      10402: 'Music',
+      9648: 'Mystery',
+      10749: 'Romance',
+      878: 'Science Fiction',
+      10770: 'TV Movie',
+      53: 'Thriller',
+      10752: 'War',
+      37: 'Western',
+      };
+  
+
     const deleteButton = authenticated && userHandle === handle ? (
       <DeleteList listId={listId} />
     ) : null
@@ -97,9 +127,13 @@ class List extends Component {
                 <img className="locandina" src={movie.imageUrl ? baseUrl + movie.imageUrl : baseUrl + movie.poster_path} alt={movie.title} />
                 <h1>{movie.title}</h1>
                 <h4>{movie.release_date}</h4>
-                <span class="minutes">117 min</span>
-                <p className="type">Action, Crime, Fantasy</p>
-                {/* <p class="type">{movie.genre_ids}</p> */}
+                {/* <span class="minutes">117 min</span>  */}
+                <p class="type">{Object.values(movie.genre_ids)
+                  .map((genre_id)=>{
+                    return genres[genre_id];
+                  })
+                  .join()}
+                </p>
               </div>
               <div className="movie_desc">
                 <p className="text">
@@ -168,17 +202,16 @@ class List extends Component {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-          </IconButton>
-          <IconButton aria-label="share">
-          </IconButton>
-          <LikeButton listId={listId} />
-          <span>{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
-          <MyButton tip="comments">
-            {/* <ChatIcon color='primary' /> */}
-            <ListDialog listId={listId} userHandle={userHandle} openDialog={this.props.openDialog} />
-          </MyButton>
-          <span>{commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}</span>
+          {/* <IconButton aria-label="add to favorites">
+          </IconButton> */}
+          {/* <IconButton aria-label="share">
+          </IconButton> */}
+          <div className={classes.interaction_buttons}>
+            <LikeButton listId={listId} />
+            <span>{likeCount} {likeCount === 1 ? 'Like' : 'Likes'}</span>
+              <ListDialog listId={listId} userHandle={userHandle} openDialog={this.props.openDialog} tip="comments"/>
+            <span>{commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}</span>
+          </div>
         </CardActions>
       </Card>
     );

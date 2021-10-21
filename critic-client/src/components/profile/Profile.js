@@ -24,10 +24,6 @@ import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 import {connect} from 'react-redux';
 import { logoutUser, uploadImage } from '../../redux/actions/userActions';
 
-
-
-
-
 const styles = (theme) => ({
     profile: {
         '& .image-wrapper': {

@@ -7,8 +7,6 @@ body {
 }
 .container{
   background-color: '#121212';
-  padding: 120px auto 0 auto;
-  max-width: 1200px;
 }
 .nav-container{
   margin: auto;

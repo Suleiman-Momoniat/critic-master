@@ -154,8 +154,8 @@ class ListDialog extends Component{
 
         return (
             <Fragment>
-                <MyButton onClick={this.handleOpen}>
-                    <UnfoldMore color="primary"/>
+                <MyButton onClick={this.handleOpen} tip="comments">
+                    <ChatIcon  color="primary"/>
                 </MyButton>
                 <Dialog
                 open={this.state.open}

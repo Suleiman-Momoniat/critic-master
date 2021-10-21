@@ -16,10 +16,7 @@ html, body{
 .movie_card{
   position: relative;
   display: block;
-  width: 800px;
-  // height: 350px;
   margin: 30px auto; 
-  // overflow: hidden;
   border-radius: 10px;
   transition: all 0.4s;
   &:hover{

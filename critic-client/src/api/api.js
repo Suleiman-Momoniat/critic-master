@@ -6,7 +6,8 @@ const api_key='efe3d1c418342122bfb294bd355b5f96';
 axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=en-US&query=hello&page=1&include_adult=false`)
 .then(res => {
     const listOfMovies = res.data.results;
-        console.log('list: ', listOfMovies);
+    console.log('HELLO');
+        // console.log('list: ', listOfMovies);
 })
 .catch(err=>console.log(err));
 
@@ -17,14 +18,15 @@ function Api(query) {
         'api_key': 'efe3d1c418342122bfb294bd355b5f96',
         'language': 'en-US',
         'include_adult': 'false',
-        //'sort': 'stars',
-        //'order': 'desc',
+        'sort': 'stars',
+        'order': 'desc',
         'page': '1',
         //'per_page': '25'
     })
     .then(res => {
         const listOfMovies = res.data.results;
-        console.log('list: ', listOfMovies);
+        return listOfMovies;
+        // console.log('list: ', listOfMovies);
     })
     .catch(err=>console.log(err));
 
